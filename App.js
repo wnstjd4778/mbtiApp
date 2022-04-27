@@ -14,6 +14,8 @@ import LogoScreen from './Screens/LogoScreen';
 import LoginScreen from './Screens/LoginScreen';
 import RegisterScreen from './Screens/RegisterScreen';
 import RegisterFinishScreen from './Screens/RegisterFinishScreen';
+import TestScreen from './Screens/TestScreen';
+import FirstScreen from './Screens/FirstScreen';
 const Stack = createStackNavigator();
 
 const App: () => Node = () => {
@@ -21,7 +23,17 @@ const App: () => Node = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="MainPage"
+          name="Test"
+          component={TestScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="First"
+          component={FirstScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Logo"
           component={LogoScreen}
           options={{headerShown: false}}
         />
