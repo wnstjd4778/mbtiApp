@@ -8,11 +8,13 @@
 
 import React, {useEffect} from 'react';
 import type {Node} from 'react';
-import {StyleSheet, Text, AsyncStorage, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FirstScreen: () => Node = ({navigation}) => {
   useEffect(() => {
@@ -27,7 +29,7 @@ const FirstScreen: () => Node = ({navigation}) => {
     <View style={styles.container}>
       <View style={{flex: 1}} />
       <View style={styles.logoArea}>
-        <Text style={styles.title}>mbti</Text>
+        <Text style={styles.title}>로고</Text>
       </View>
       <View style={{flex: 1}} />
     </View>

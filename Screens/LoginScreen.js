@@ -68,7 +68,7 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
       </View>
       <View style={{flex: 0.75}}>
         <View style={styles.btnArea}>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={() => navigate('Test')}>
             <Text style={(styles.Text, {color: 'white'})}>로그인</Text>
           </TouchableOpacity>
         </View>

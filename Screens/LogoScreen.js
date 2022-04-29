@@ -19,7 +19,7 @@ const LogoScreen: () => Node = ({navigation}) => {
     <View style={styles.container}>
       <View style={{flex: 1}} />
       <View style={styles.logoArea}>
-        <Text style={styles.title}>mbti</Text>
+        <Text style={styles.title}>로고</Text>
       </View>
       <View style={styles.btnArea}>
         <TouchableOpacity

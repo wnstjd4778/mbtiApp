@@ -23,11 +23,6 @@ const App: () => Node = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Test"
-          component={TestScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
           name="First"
           component={FirstScreen}
           options={{headerShown: false}}
