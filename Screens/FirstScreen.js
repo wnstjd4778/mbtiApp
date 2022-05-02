@@ -19,9 +19,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const FirstScreen: () => Node = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      AsyncStorage.getItem('email').then(value =>
-        navigation.replace(value === null ? 'Logo' : 'Main'),
-      );
+      const email = AsyncStorage.getItem('email');
+      console.log(email);
+      email._W !== null
+        ? navigation.navigate('BottomTab')
+        : navigation.navigate('Logo');
     }, 3000);
   }, [navigation]);
 

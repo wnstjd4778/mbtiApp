@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
   StyleSheet,
@@ -19,102 +19,38 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import TestForm from '../Component/TestForm';
+import {testProblems} from '../Constants/testProblems'
+const TestScreen: () => Node = () => {
+  const [tests, setTests] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
-const TestScreen: () => Node = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.Text}>mbti 성격유형 검사</Text>
+      <Text
+        style={{
+          fontSize: 25,
+          paddingVertical: hp(2),
+          backgroundColor: '#5AD2FF',
+          color: 'white',
+          textAlign: 'center',
+        }}>
+        mbti 성격유형 검사
+      </Text>
       <ScrollView>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
-        <View style={styles.TestArea}>
-          <Text style={styles.Text}>1. 안녕하세요</Text>
-          <View style={styles.CircleArea}>
-            <TouchableOpacity style={styles.FirstCircle} />
-            <TouchableOpacity style={styles.SecondCircle} />
-            <TouchableOpacity style={styles.ThirdCircle} />
-            <TouchableOpacity style={styles.FourthCircle} />
-            <TouchableOpacity style={styles.FifthCircle} />
-          </View>
-        </View>
+        {tests.map((test, index) => (
+          <TestForm
+            problem={testProblems[index]}
+            key={index}
+            tests={tests}
+            test={test}
+            index={index}
+            setTests={setTests}
+          />
+        ))}
       </ScrollView>
       <View style={styles.btnArea}>
         <TouchableOpacity style={styles.btn}>
@@ -132,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, //전체의 공간을 차지한다는 의미
     flexDirection: 'column',
-    backgroundColor: 'white',
+    backgroundColor: '#dcdcdc',
   },
   topArea: {
     flex: 20,
@@ -146,69 +82,6 @@ const styles = StyleSheet.create({
   TestsArea: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: wp(5),
-  },
-  TestArea: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: hp(5),
-  },
-  Text: {
-    flex: 1,
-    fontSize: 25,
-    alignItems: 'center',
-    paddingLeft: wp(5),
-    paddingBottom: hp(3),
-  },
-  SecondCircle: {
-    flex: 1,
-    width: wp(3),
-    height: hp(3),
-    borderRadius: 50,
-    borderColor: 'green',
-    borderWidth: 3,
-    marginRight: 16,
-  },
-  ThirdCircle: {
-    flex: 1,
-    width: wp(3),
-    height: hp(3),
-    borderRadius: 50,
-    borderColor: 'black',
-    borderWidth: 3,
-    marginRight: 16,
-  },
-  FourthCircle: {
-    flex: 1,
-    width: wp(3),
-    height: hp(3),
-    borderRadius: 50,
-    borderColor: 'red',
-    borderWidth: 3,
-    marginRight: 16,
-  },
-  FifthCircle: {
-    flex: 1,
-    width: wp(3),
-    height: hp(3),
-    borderRadius: 50,
-    borderColor: 'red',
-    borderWidth: 3,
-    marginRight: 16,
-  },
-  FirstCircle: {
-    flex: 1,
-    width: wp(3),
-    height: hp(3),
-    borderRadius: 50,
-    borderColor: 'green',
-    borderWidth: 3,
-    marginRight: 16,
-  },
-  CircleArea: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingHorizontal: wp(5),
   },
   btnArea: {

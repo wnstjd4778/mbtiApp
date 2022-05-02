@@ -13,8 +13,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const RegisterFinishScreen: () => Node = props => {
+const RegisterFinishScreen: () => Node = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={{flex: 1}} />
@@ -36,19 +37,22 @@ const RegisterFinishScreen: () => Node = props => {
             회원가입이 완료되었습니다.
           </Text>
         </View>
-
-        <View style={{height: hp(20), justifyContent: 'center'}}>
-          <View style={styles.btnArea}>
-            <TouchableOpacity
-              style={styles.btn}
-              activeOpacity={0.5}
-              onPress={() => props.navigation.navigate('Login')}>
-              <Text style={{color: 'white', fontSize: wp('4%')}}>
-                로그인하기
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <TouchableOpacity
+          style={{
+            marginTop: hp(2),
+            marginRight: wp(2),
+            backgroundColor: '#3498db',
+            borderRadius: 8,
+          }}
+          onPress={async () => (
+            console.log(AsyncStorage.getItem('email')),
+            await AsyncStorage.clear(),
+            navigation.navigate('Login')
+          )}>
+          <Text style={{color: 'white', fontSize: 17, textAlign: 'center'}}>
+            로그인 페이지
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

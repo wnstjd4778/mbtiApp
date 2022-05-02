@@ -38,13 +38,14 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
       return;
     }
     await axios
-      .post('', {
+      .post('http://10.0.2.2:3000/user/login', {
         email,
         password,
       })
-      .then(res => {
-        if (res.status === 'success') {
-          AsyncStorage.setItem('accessToken', res.data.accessToken);
+      .then(async res => {
+        if (res.data.status === 200) {
+          await AsyncStorage.setItem('email', res.data.email);
+          navigate('BottomTab');
         } else {
           setErrorText('아이디와 비밀번호를 다시 확인해주세요');
         }
@@ -52,6 +53,13 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
       .catch(err => {
         console.log(err);
       });
+  };
+
+  const handleEmail = email => {
+    setEmail(email);
+  };
+  const handlePassword = password => {
+    setPassword(password);
   };
   return (
     <View style={styles.container}>
@@ -62,13 +70,23 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
       </View>
 
       <View style={styles.formArea}>
-        <TextInput style={styles.textFormTop} placeholder={'아이디'} />
-        <TextInput style={styles.textFormBottom} placeholder={'비밀번호'} />
-        <Text style={styles.TextValidation}>유효하지 않은 ID입니다.</Text>
+        <TextInput
+          style={styles.textFormTop}
+          placeholder={'아이디'}
+          onChangeText={email => handleEmail(email)}
+        />
+        <TextInput
+          style={styles.textFormBottom}
+          placeholder={'비밀번호'}
+          onChangeText={password => {
+            handlePassword(password);
+          }}
+        />
+        <Text style={styles.TextValidation}>{errorText}</Text>
       </View>
       <View style={{flex: 0.75}}>
         <View style={styles.btnArea}>
-          <TouchableOpacity style={styles.btn} onPress={() => navigate('Test')}>
+          <TouchableOpacity style={styles.btn} onPress={loginProcess}>
             <Text style={(styles.Text, {color: 'white'})}>로그인</Text>
           </TouchableOpacity>
         </View>

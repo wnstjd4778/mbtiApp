@@ -20,8 +20,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import 'react-native-gesture-handler';
+import axios from 'axios';
 
-const LogoScreen: () => Node = props => {
+const LogoScreen: () => Node = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -34,9 +35,7 @@ const LogoScreen: () => Node = props => {
   const passwordchkInputRef = createRef();
   const nameInputRef = createRef();
 
-  const handleSubmitButton = () => {
-    setErrortext('');
-
+  const handleSubmitButton = async () => {
     if (!userName) {
       alert('이름을 입력해주세요');
       return;
@@ -54,41 +53,19 @@ const LogoScreen: () => Node = props => {
       alert('비밀번호가 일치하지 않습니다');
       return;
     }
-    const dataToSend = {
-      nickName: userName,
-      email: userEmail,
-      password: userPassword,
-    };
-    let formBody = [];
-    for (let key in dataToSend) {
-      const encodedKey = encodeURIComponent(key);
-      const encodedValue = encodeURIComponent(dataToSend[key]);
-      formBody.push(encodedKey + '=' + encodedValue);
-    }
-    formBody = formBody.join('&');
-
-    fetch('http://localhost:3001/api/user/register', {
-      method: 'POST',
-      body: formBody,
-      headers: {
-        //Header Defination
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        setErrortext2('');
-        console.log(responseJson);
-        // If server response message same as Data Matched
-        if (responseJson.status === 'success') {
-          props.navigation.navigate('RegisterFinish');
-          console.log('Registration Successful. Please Login to proceed');
-        } else if (responseJson.status === 'duplicate') {
-          setErrortext2('이미 존재하는 아이디입니다.');
-        }
+    await axios
+      .post('http://10.0.2.2:3000/user/join', {
+        email: userEmail,
+        password: userPassword,
+        name: userName,
+        salt:1,
       })
-      .catch(error => {
-        console.error(error);
+      .then(res => {
+        if (res.data.status == 200) {
+          navigation.navigate('RegisterFinish');
+        } else {
+          setErrortext('이메일이 중복되었습니다.');
+        }
       });
   };
 
@@ -97,8 +74,7 @@ const LogoScreen: () => Node = props => {
       <View style={styles.topArea}>
         <View style={styles.titleArea} />
         <View style={styles.TextArea}>
-          <Text style={styles.Text}>회원가입하여 나만의 공부 도우미</Text>
-          <Text style={styles.Text}>viva를 사용해보세요 ‍📘</Text>
+          <Text style={styles.Text}>회원가입</Text>
         </View>
       </View>
 
@@ -161,8 +137,8 @@ const LogoScreen: () => Node = props => {
       </View>
 
       <View style={{flex: 0.7, justifyContent: 'center'}}>
-        {errortext2 !== '' ? (
-          <Text style={styles.TextValidation}>{errortext2}</Text>
+        {errortext !== '' ? (
+          <Text style={styles.TextValidation}>{errortext}</Text>
         ) : null}
       </View>
 

@@ -8,43 +8,66 @@
 
 import React from 'react';
 import type {Node} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import TestScreen from './Screens/TestScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import TestScreen from '../Screens/TestScreen';
+import ChatRoomScreen from '../Screens/ChatRoomScreen';
+import HomeScreen from '../Screens/HomeScreen';
+import ProfileScreen from "../Screens/ProfileScreen";
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation: () => Node = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBarOptions={{
-          tabBarActiveTintColor: '#7DD421',
-          tabBarInactiveTintColor: '#222222',
-          style: {
-            height: hp(10),
-            borderTopWidth: hp(0.5),
-            borderTopColor: '#E9E9E9',
-            backgroundColor: '#FFFFFF',
-          },
-          iconStyle: {
-            marginTop: hp(10),
-          },
-          tabBarLabelStyle: {
-            fontFamily: 'NotoSansKR-Regular',
-            fontSize: 30,
-          },
-        }}>
-        <Tab.Screen
-          name="Test"
-          component={TestScreen}
-          options={{headerShown: false}}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name={'home'} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="테스트"
+        component={TestScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name={'list'} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="채팅"
+        component={ChatRoomScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name={'comments'} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="프로필"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name={'comments'} size={size} color={color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
