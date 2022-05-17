@@ -7,16 +7,15 @@ import {
 
 function StudyGroup(props) {
   return (
-    <TouchableOpacity>
-      <View
-        style={{
-          borderRadius: 5,
-          marginLeft: wp(5),
-          height: hp(3),
-          marginBottom: hp(1),
-        }}>
-        <Text style={{color: 'black'}}>{props.location}</Text>
-      </View>
+    <TouchableOpacity
+      style={{
+        marginLeft: wp(5),
+        flex: 1,
+        marginBottom: hp(1),
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <Text style={{color: 'black'}}>{props.location}</Text>
     </TouchableOpacity>
   );
 }

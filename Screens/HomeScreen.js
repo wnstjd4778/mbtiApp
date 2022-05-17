@@ -23,15 +23,8 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 const HomeScreen: () => Node = ({navigation}) => {
   const [chatRooms, setChatRooms] = useState([
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
-    {title: 'infp', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
+    {title: '그룹스터디1', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
+    {title: '그룹스터디2', content: 'aaaaa', viewCnt: 5, mbti: 'intp'},
   ]);
   const renderItem = ({item}) => {
     return (

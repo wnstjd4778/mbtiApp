@@ -63,7 +63,7 @@ const BottomTabNavigation: () => Node = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
-            <Icon name={'comments'} size={size} color={color} />
+            <Icon name={'info'} size={size} color={color} />
           ),
         }}
       />

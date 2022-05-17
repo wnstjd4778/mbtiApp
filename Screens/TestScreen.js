@@ -30,16 +30,6 @@ const TestScreen: () => Node = () => {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 25,
-          paddingVertical: hp(2),
-          backgroundColor: '#5AD2FF',
-          color: 'white',
-          textAlign: 'center',
-        }}>
-        mbti 성격유형 검사
-      </Text>
       <ScrollView>
         {tests.map((test, index) => (
           <TestForm

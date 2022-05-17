@@ -7,6 +7,7 @@ import RegisterScreen from '../Screens/RegisterScreen';
 import RegisterFinishScreen from '../Screens/RegisterFinishScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import PostScreen from '../Screens/PostScreen';
+import InsertPostScreen from "../Screens/InsertPostScreen";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,11 @@ const RootStack: () => Node = () => {
       <Stack.Screen
         name="Post"
         component={PostScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="InsertPost"
+        component={InsertPostScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

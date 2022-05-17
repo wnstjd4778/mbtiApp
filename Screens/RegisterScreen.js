@@ -58,13 +58,13 @@ const LogoScreen: () => Node = ({navigation}) => {
         email: userEmail,
         password: userPassword,
         name: userName,
-        salt:1,
+        salt: 1,
       })
       .then(res => {
         if (res.data.status == 200) {
           navigation.navigate('RegisterFinish');
         } else {
-          setErrortext('이메일이 중복되었습니다.');
+          alert('이메일이 중복되었습니다.');
         }
       });
   };
@@ -116,7 +116,6 @@ const LogoScreen: () => Node = ({navigation}) => {
         />
         <TextInput
           style={styles.textFormBottom}
-          secureTextEntry={true}
           placeholder={'닉네임'}
           onChangeText={UserName => setUserName(UserName)}
           ref={nameInputRef}

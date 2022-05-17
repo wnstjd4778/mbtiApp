@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: hp(1),
     backgroundColor: 'white',
+    borderRadius: 8,
   },
   Text: {
     flex: 1,

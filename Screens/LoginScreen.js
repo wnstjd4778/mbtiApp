@@ -47,7 +47,7 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
           await AsyncStorage.setItem('email', res.data.email);
           navigate('BottomTab');
         } else {
-          setErrorText('아이디와 비밀번호를 다시 확인해주세요');
+          alert('아이디와 비밀번호를 다시 확인해주세요');
         }
       })
       .catch(err => {
@@ -65,7 +65,6 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
     <View style={styles.container}>
       <View style={styles.topArea}>
         <View style={styles.titleArea}>
-          <Text>mbti 로그인</Text>
         </View>
       </View>
 
@@ -78,6 +77,7 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
         <TextInput
           style={styles.textFormBottom}
           placeholder={'비밀번호'}
+          secureTextEntry={true}
           onChangeText={password => {
             handlePassword(password);
           }}
