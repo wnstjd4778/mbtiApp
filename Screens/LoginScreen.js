@@ -43,15 +43,14 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
         password,
       })
       .then(async res => {
+        console.log(res.data.data);
         if (res.data.status === 200) {
-          await AsyncStorage.setItem('email', res.data.email);
+          await AsyncStorage.setItem('email', res.data.data.email);
           navigate('BottomTab');
-        } else {
-          alert('아이디와 비밀번호를 다시 확인해주세요');
         }
       })
       .catch(err => {
-        console.log(err);
+        alert('아이디와 비밀번호를 다시 확인해주세요');
       });
   };
 
@@ -64,8 +63,7 @@ const LoginScreen: () => Node = ({navigation: {navigate}}) => {
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
-        <View style={styles.titleArea}>
-        </View>
+        <View style={styles.titleArea} />
       </View>
 
       <View style={styles.formArea}>

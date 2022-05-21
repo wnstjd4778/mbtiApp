@@ -15,43 +15,62 @@ import {
 } from 'react-native-responsive-screen';
 import {
   Icon,
+  IndexPath,
   Input,
+  Select,
+  SelectGroup,
+  SelectItem,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
+import Slider from '@react-native-community/slider';
 import axios from 'axios';
+import {MBTI} from '../Constants/mbti';
+import {LOCATION} from '../Constants/testProblems';
 
 const InsertPostScreen: () => Node = ({navigation, route}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [mbtis, setMbtis] = useState(new IndexPath(0));
+  const [location, setLocation] = useState(new IndexPath(0));
+  const [userCount, setUserCount] = useState(1);
 
-  const groupId = route.params.groupId;
-
-  const createPost = async () => {
+  const createGroup = async () => {
+    const locationJson = LOCATION[location.row];
+    const mbtisJson = mbtis.map(val => MBTI[val.row]);
     await axios
-      .post('http://10.0.2.2:3000/study/' + groupId + '/post', {
+      .post('http://10.0.2.2:3000/study', {
         title,
         content,
+        mbti: mbtisJson,
+        location: locationJson,
+        userCount,
       })
       .then(res => {
+        alert('스터디 그룹이 생성되었습니다.');
         navigation.navigate('Home');
       });
   };
+
+  const mbtiValues = MBTI[mbtis.row];
+  const locationValues = LOCATION[location.row];
+
   const BackIcon = props => <Icon {...props} name="arrow-back" />;
 
   const CheckIcon = props => (
     <Icon {...props} name="checkmark-circle-2-outline" />
   );
-
   const renderRightActions = () => (
     <React.Fragment>
-      <TopNavigationAction icon={CheckIcon} onPress={createPost} />
+      <TopNavigationAction icon={CheckIcon} onPress={createGroup} />
     </React.Fragment>
   );
 
   const renderBackAction = () => (
     <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
   );
+
+  const renderOption = title => <SelectItem key={title} title={title} />;
 
   return (
     <View style={styles.container}>
@@ -70,13 +89,35 @@ const InsertPostScreen: () => Node = ({navigation, route}) => {
           onChangeText={nextValue => setTitle(nextValue)}
         />
         <View style={{height: hp(3)}} />
-        <Text style={styles.text}>내용</Text>
-        <Input
-          placeholder="내용을 입력하세요"
-          value={content}
-          textStyle={{...styles.input, minHeight: hp(50)}}
-          onChangeText={nextValue => setContent(nextValue)}
+        <Text style={styles.text}>MBTI</Text>
+        <Select
+          placeholder="Multi"
+          multiSelect={true}
+          value={mbtiValues}
+          selectedIndex={mbtis}
+          onSelect={index => setMbtis(index)}>
+          {MBTI.map(renderOption)}
+        </Select>
+        <Text style={styles.text}>지역</Text>
+        <Select
+          placeholder="Multi"
+          value={locationValues}
+          selectedIndex={location}
+          onSelect={index => setLocation(index)}>
+          {LOCATION.map(renderOption)}
+        </Select>
+
+        <Text style={styles.text}>참여가능한 사람 수</Text>
+        <Slider
+          onValueChange={value => setUserCount(value)}
+          value={userCount}
+          minimumValue={1}
+          maximumValue={100}
+          maximumTrackTintColor="red"
+          minimumTrackTintColor="blue"
+          step={1}
         />
+        <Text> {userCount} </Text>
       </ScrollView>
     </View>
   );

@@ -7,7 +7,12 @@ import RegisterScreen from '../Screens/RegisterScreen';
 import RegisterFinishScreen from '../Screens/RegisterFinishScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import PostScreen from '../Screens/PostScreen';
-import InsertPostScreen from "../Screens/InsertPostScreen";
+import InsertPostScreen from '../Screens/InsertPostScreen';
+import InsertGroupScreen from '../Screens/InsertGroupScreen';
+import TestScreen from '../Screens/TestScreen';
+import MbtiResultScreen from '../Screens/MbtiResultScreen';
+import GroupContentScreen from '../Screens/GroupContentScreen';
+import GroupMBTItScreen from '../Screens/GroupMBTItScreen';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +57,31 @@ const RootStack: () => Node = () => {
       <Stack.Screen
         name="InsertPost"
         component={InsertPostScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="InsertGroup"
+        component={InsertGroupScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Test"
+        component={TestScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="MbtiResult"
+        component={MbtiResultScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GroupContent"
+        component={GroupContentScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GroupMbti"
+        component={GroupMBTItScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

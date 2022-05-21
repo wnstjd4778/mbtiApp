@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import TestScreen from '../Screens/TestScreen';
 import ChatRoomScreen from '../Screens/ChatRoomScreen';
 import HomeScreen from '../Screens/HomeScreen';
-import ProfileScreen from "../Screens/ProfileScreen";
+import ProfileScreen from '../Screens/ProfileScreen';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation: () => Node = () => {
@@ -34,16 +34,6 @@ const BottomTabNavigation: () => Node = () => {
           headerShown: false,
           tabBarIcon: ({color, size}) => (
             <Icon name={'home'} size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="테스트"
-        component={TestScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({color, size}) => (
-            <Icon name={'list'} size={size} color={color} />
           ),
         }}
       />

@@ -14,8 +14,11 @@ function StudyGroup(props) {
         marginBottom: hp(1),
         alignItems: 'center',
         justifyContent: 'center',
-      }}>
-      <Text style={{color: 'black'}}>{props.location}</Text>
+      }}
+      onPress={() => props.setLocation(props.location)}>
+      <Text style={props.location == props.nowLocation ? {color: 'blue'} : {}}>
+        {props.location}
+      </Text>
     </TouchableOpacity>
   );
 }

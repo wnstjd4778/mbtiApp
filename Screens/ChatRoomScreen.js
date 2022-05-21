@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
 import {
   StyleSheet,
@@ -23,25 +23,29 @@ import {
 import StudyGroup from '../Component/StudyGroup';
 import Search from '../Component/Search';
 import Modal from 'react-native-modal';
-import {ApplicationProvider, Button} from '@ui-kitten/components';
-import * as eva from '@eva-design/eva';
+import {
+  ApplicationProvider,
+  Button,
+  Layout,
+  Popover,
+} from '@ui-kitten/components';
+import axios from 'axios';
 
-const ChatRoomScreen: () => Node = () => {
-  const [chatRooms, setChatRooms] = useState([
-    {title: '스터디그룹1', mbti: 'intp'},
-    {title: '스터디그룹2', mbti: 'intp'},
-    {title: '스터디그룹3', mbti: 'intp'},
-    {title: '스터디그룹4', mbti: 'intp'},
-    {title: '스터디그룹5', mbti: 'intp'},
-    {title: '스터디그룹6', mbti: 'intp'},
-    {title: '스터디그룹7', mbti: 'intp'},
-  ]);
-  const [visible, setVisible] = useState(false);
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
+const ChatRoomScreen: () => Node = ({navigation}) => {
+  const [chatRooms, setChatRooms] = useState([]);
+  const [location, setLocation] = useState('전체');
+
+  useEffect(() => {
+    axios.get('http://10.0.2.2:3000/study?location=' + location).then(res => {
+      if (res.data.status == 200) {
+        setChatRooms(res.data.data);
+      }
+    });
+  }, [location]);
+
   const renderItem = ({item}) => {
     return (
-      <View style={{flex: 2}}>
+      <View style={{flex: 5}}>
         <View
           style={{
             marginBottom: hp(1),
@@ -75,6 +79,17 @@ const ChatRoomScreen: () => Node = () => {
             </View>
             <View style={{flex: 1}}>
               <Button
+                onPress={async () => {
+                  await axios
+                    .post('http://10.0.2.2:3000/study/' + item._id + '/enroll')
+                    .then(res => {
+                      alert('성공');
+                      setLocation('전체');
+                    })
+                    .catch(err => {
+                      alert('실패');
+                    });
+                }}
                 style={{
                   marginTop: hp(2),
                   marginRight: wp(2),
@@ -92,10 +107,16 @@ const ChatRoomScreen: () => Node = () => {
               borderTopColor: '#BDBDBD',
               flex: 1,
             }}>
-            <TouchableOpacity style={{flex: 1}} onPress={showModal}>
+            <TouchableOpacity
+              style={{flex: 1}}
+              onPress={() =>
+                navigation.navigate('GroupContent', {group: item})
+              }>
               <Text style={styles.listBottomText}> 소개 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1}} onPress={showModal}>
+            <TouchableOpacity
+              style={{flex: 1}}
+              onPress={() => navigation.navigate('GroupMbti', {group: item})}>
               <Text style={styles.listBottomText}> mbti </Text>
             </TouchableOpacity>
           </View>
@@ -108,36 +129,75 @@ const ChatRoomScreen: () => Node = () => {
       <Search />
       <ScrollView
         style={{
-          height: hp(5),
+          flex: 0.1,
           backgroundColor: 'white',
           marginBottom: hp(1),
         }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
-        <StudyGroup location="전체" />
-        <StudyGroup location="서울" />
-        <StudyGroup location="수도권" />
-        <StudyGroup location="충북/충남/대전" />
-        <StudyGroup location="전북" />
-        <StudyGroup location="전남/광주" />
-        <StudyGroup location="경북/대구" />
-        <StudyGroup location="경남/부산/울산" />
-        <StudyGroup location="강원" />
-        <StudyGroup location="제주" />
-        <StudyGroup location="기타" />
+        <StudyGroup
+          location="전체"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="서울"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="수도권"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="충북/충남/대전"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="전북"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="전남/광주"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="경북/대구"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="경남/부산/울산"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="강원"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="제주"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
+        <StudyGroup
+          location="기타"
+          nowLocation={location}
+          setLocation={setLocation}
+        />
       </ScrollView>
-      <FlatList
-        contentContainerStyle={{flexGrow: 1}}
-        data={chatRooms}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index}
-      />
-      <Modal visible={visible} onDismiss={hideModal}>
-        <View style={styles.modalStyle}>
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
-          <Button title="Hide modal" onPress={hideModal} />
-        </View>
-      </Modal>
+      <View style={{flex: 15}}>
+        <FlatList
+          data={chatRooms}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index}
+        />
+      </View>
     </View>
   );
 };
@@ -163,7 +223,7 @@ const styles = StyleSheet.create({
   Text: {
     fontSize: 25,
     marginVertical: hp(2),
-    textAlignVertical: 'center',
+    textAlignVertical: '//center',
     color: 'white',
     textAlign: 'center',
   },
@@ -176,6 +236,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 8,
   },
   modalStyle: {
     height: hp(),

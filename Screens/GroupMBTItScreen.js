@@ -6,32 +6,41 @@
  * @flow strict-local
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Icon, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+const MbtiResultScreen: () => Node = ({navigation, route}) => {
+  const group = route.params.group;
+  const BackIcon = props => <Icon {...props} name="arrow-back" />;
 
-const FirstScreen: () => Node = ({navigation}) => {
-  useEffect(() => {
-    setTimeout(() => {
-      const email = AsyncStorage.getItem('email');
-      console.log(email);
-      email._W !== null
-        ? navigation.navigate('BottomTab')
-        : navigation.navigate('Logo');
-    }, 3000);
-  }, [navigation]);
+  const CheckIcon = props => (
+    <Icon {...props} name="checkmark-circle-2-outline" />
+  );
+
+  const renderBackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+  );
 
   return (
     <View style={styles.container}>
+      <TopNavigation
+        alignment="center"
+        title="MBTI"
+        accessoryLeft={renderBackAction}
+      />
       <View style={{flex: 1}} />
       <View style={styles.logoArea}>
-        <Text style={styles.title}>MBTI</Text>
+        {group.mbti.map(mbti => (
+          <Text key={mbti} style={styles.title}>
+            {mbti}
+          </Text>
+        ))}
       </View>
       <View style={{flex: 1}} />
     </View>
@@ -60,25 +69,6 @@ const styles = StyleSheet.create({
     fontSize: 45,
     fontWeight: 'bold',
   },
-  btn: {
-    flex: 1,
-    marginTop: 10,
-    width: wp(75),
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  btnOutline: {
-    flex: 1,
-    marginTop: 10,
-    width: wp(75),
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderWidth: 1,
-  },
 });
 
-export default FirstScreen;
+export default MbtiResultScreen;

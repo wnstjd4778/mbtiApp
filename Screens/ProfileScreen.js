@@ -6,44 +6,59 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import StudyGroup from '../Component/StudyGroup';
+import {Button, IndexPath, Menu, MenuItem} from '@ui-kitten/components';
 
 const ProfileScreen: () => Node = ({navigation}) => {
+  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
+
+  const LogOutIcon = props => <Icon {...props} name="log-out-outline" />;
+
+  const editGroupIcon = props => <Icon {...props} name="edit-2-outline" />;
+
+  const checkIcon = props => (
+    <Icon {...props} name="checkmark-circle-outline" />
+  );
+
+  const testIcon = props => <Icon {...props} name="plus-square-outline" />;
+
   return (
     <View style={styles.container}>
-      <View>
-        <View style={{backgroundColor: '#5AD2FF', marginBottom: hp(2)}}>
-          <Text style={styles.Text}>내 정보</Text>
-        </View>
-        <TouchableOpacity
-          style={{
-            marginTop: hp(2),
-            marginRight: wp(2),
-            backgroundColor: 'red',
-            borderRadius: 8,
-          }}
+      <Menu
+        selectedIndex={selectedIndex}
+        onSelect={index => setSelectedIndex(index)}>
+        <MenuItem
+          style={{height: hp(22.5)}}
+          title="로그아웃"
+          accessoryLeft={LogOutIcon}
           onPress={() => navigation.navigate('Logo')}
-        >
-          <Text style={{color: 'white', fontSize: 17, textAlign: 'center'}}>
-            로그아웃
-          </Text>
-        </TouchableOpacity>
-      </View>
+        />
+        <MenuItem
+          style={{height: hp(22.5)}}
+          title="그룹만들기"
+          accessoryLeft={editGroupIcon}
+          onPress={() => navigation.navigate('InsertGroup')}
+        />
+        <MenuItem
+          style={{height: hp(22.5)}}
+          title="MBTI 테스트"
+          accessoryLeft={testIcon}
+          onPress={() => navigation.navigate('Test')}
+        />
+        <MenuItem
+          style={{height: hp(22.5)}}
+          title="MBTI 결과 확인"
+          accessoryLeft={checkIcon}
+          onPress={() => navigation.navigate('MbtiResult')}
+        />
+      </Menu>
     </View>
   );
 };

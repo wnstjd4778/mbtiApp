@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {
   Card,
@@ -8,22 +8,31 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
+import axios from 'axios';
 const data = new Array(8).fill({
   title: 'Item',
 });
 
-const PostScreen = ({navigation}) => {
+const PostScreen = ({navigation, route}) => {
+  const [posts, setPosts] = useState([]);
+
+  const groupId = route.params.groupId;
+
+  useEffect(() => {
+    axios.get('http://10.0.2.2:3000/study/' + groupId + '/posts').then(res => {
+      setPosts(res.data.data);
+    });
+  }, [groupId]);
+
   const renderItemHeader = (headerProps, info) => (
     <View {...headerProps}>
       <Text category="h6">
-        {info.item.title} {info.index + 1}
+        {info.item.title}
       </Text>
     </View>
   );
 
-  const renderItemFooter = footerProps => (
-    <Text {...footerProps}>By Wikipedia</Text>
-  );
+  const renderItemFooter = footerProps => <Text {...footerProps} ></Text>;
 
   const renderItem = info => (
     <Card
@@ -31,14 +40,8 @@ const PostScreen = ({navigation}) => {
       status="basic"
       header={headerProps => renderItemHeader(headerProps, info)}
       footer={renderItemFooter}>
-      <Text>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged.
-      </Text>
+      <Text>{info.item.content}</Text>
+      <Text>{info.item.writer.email}</Text>
     </Card>
   );
 
@@ -50,12 +53,14 @@ const PostScreen = ({navigation}) => {
     <React.Fragment>
       <TopNavigationAction
         icon={EditIcon}
-        onPress={() => navigation.navigate('InsertPost')}
+        onPress={() => navigation.navigate('InsertPost', {groupId})}
       />
     </React.Fragment>
   );
 
-  const renderBackAction = () => <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()}/>;
+  const renderBackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+  );
 
   return (
     <View style={styles.container}>
@@ -67,7 +72,7 @@ const PostScreen = ({navigation}) => {
       />
       <List
         contentContainerStyle={styles.contentContainer}
-        data={data}
+        data={posts}
         renderItem={renderItem}
       />
     </View>
