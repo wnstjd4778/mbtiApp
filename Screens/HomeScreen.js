@@ -23,6 +23,8 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Button} from '@ui-kitten/components';
 import axios from 'axios';
+import Search from '../Component/Search';
+import {CommonActions} from '@react-navigation/native';
 const HomeScreen: () => Node = ({navigation}) => {
   const [chatRooms, setChatRooms] = useState([]);
 
@@ -44,7 +46,7 @@ const HomeScreen: () => Node = ({navigation}) => {
       .post('http://10.0.2.2:3000/study/' + groupId + '/unenroll')
       .then(res => {
         if (res.data.status == 200) {
-          navigation.navigate('Home');
+          navigation.dispatch(CommonActions.navigate('Home'));
         }
       });
   };
@@ -54,6 +56,9 @@ const HomeScreen: () => Node = ({navigation}) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Post', {groupId: item._id});
+            navigation.dispatch(
+              CommonActions.navigate('Post', {groupId: item._id}),
+            );
           }}
           style={{
             marginBottom: hp(1),
@@ -115,6 +120,7 @@ const HomeScreen: () => Node = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
+      <Search />
       <View>
         <View style={{backgroundColor: 'white', marginBottom: hp(2)}}>
           <Text style={styles.Text}>나의 스터디 그룹은 ?</Text>
@@ -148,6 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   Text: {
+    marginLeft: wp(5),
     fontSize: 25,
     marginVertical: hp(2),
     color: 'black',

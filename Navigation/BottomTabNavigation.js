@@ -38,7 +38,7 @@ const BottomTabNavigation: () => Node = () => {
         }}
       />
       <Tab.Screen
-        name="채팅"
+        name="Group"
         component={ChatRoomScreen}
         options={{
           headerShown: false,

@@ -9,6 +9,7 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 import axios from 'axios';
+import {CommonActions} from '@react-navigation/native';
 const data = new Array(8).fill({
   title: 'Item',
 });
@@ -26,13 +27,11 @@ const PostScreen = ({navigation, route}) => {
 
   const renderItemHeader = (headerProps, info) => (
     <View {...headerProps}>
-      <Text category="h6">
-        {info.item.title}
-      </Text>
+      <Text category="h6">{info.item.title}</Text>
     </View>
   );
 
-  const renderItemFooter = footerProps => <Text {...footerProps} ></Text>;
+  const renderItemFooter = footerProps => <Text />;
 
   const renderItem = info => (
     <Card
@@ -53,13 +52,18 @@ const PostScreen = ({navigation, route}) => {
     <React.Fragment>
       <TopNavigationAction
         icon={EditIcon}
-        onPress={() => navigation.navigate('InsertPost', {groupId})}
+        onPress={() =>
+          navigation.dispatch(CommonActions.navigate('InsertPost', {groupId}))
+        }
       />
     </React.Fragment>
   );
 
   const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+    <TopNavigationAction
+      icon={BackIcon}
+      onPress={() => navigation.dispatch(CommonActions.navigate('Home'))}
+    />
   );
 
   return (

@@ -54,10 +54,11 @@ const TestScreen: () => Node = ({navigation}) => {
       .then(res => {
         if (res.data.status == 200) {
           alert('검사를 완료하였습니다.');
-          navigation.navigate('Home');
+          navigation.navigate('MbtiResult');
         }
       });
   };
+
 
   return (
     <View style={styles.container}>

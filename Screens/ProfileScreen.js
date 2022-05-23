@@ -19,16 +19,6 @@ import {Button, IndexPath, Menu, MenuItem} from '@ui-kitten/components';
 const ProfileScreen: () => Node = ({navigation}) => {
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
 
-  const LogOutIcon = props => <Icon {...props} name="log-out-outline" />;
-
-  const editGroupIcon = props => <Icon {...props} name="edit-2-outline" />;
-
-  const checkIcon = props => (
-    <Icon {...props} name="checkmark-circle-outline" />
-  );
-
-  const testIcon = props => <Icon {...props} name="plus-square-outline" />;
-
   return (
     <View style={styles.container}>
       <Menu
@@ -37,25 +27,21 @@ const ProfileScreen: () => Node = ({navigation}) => {
         <MenuItem
           style={{height: hp(22.5)}}
           title="로그아웃"
-          accessoryLeft={LogOutIcon}
           onPress={() => navigation.navigate('Logo')}
         />
         <MenuItem
           style={{height: hp(22.5)}}
           title="그룹만들기"
-          accessoryLeft={editGroupIcon}
           onPress={() => navigation.navigate('InsertGroup')}
         />
         <MenuItem
           style={{height: hp(22.5)}}
           title="MBTI 테스트"
-          accessoryLeft={testIcon}
           onPress={() => navigation.navigate('Test')}
         />
         <MenuItem
           style={{height: hp(22.5)}}
           title="MBTI 결과 확인"
-          accessoryLeft={checkIcon}
           onPress={() => navigation.navigate('MbtiResult')}
         />
       </Menu>

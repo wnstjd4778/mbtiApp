@@ -16,14 +16,15 @@ import {
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { Icon, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
+import {Icon, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
+import {CommonActions} from '@react-navigation/native';
 
 const MbtiResultScreen: () => Node = ({navigation}) => {
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     getMe();
-  }, []);
+  }, [navigation]);
 
   const getMe = async () => {
     await axios.get('http://10.0.2.2:3000/user/me').then(res => {
@@ -41,7 +42,10 @@ const MbtiResultScreen: () => Node = ({navigation}) => {
   );
 
   const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+    <TopNavigationAction
+      icon={BackIcon}
+      onPress={() => navigation.dispatch(CommonActions.navigate('Home'))}
+    />
   );
 
   return (

@@ -20,6 +20,7 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 import axios from 'axios';
+import { CommonActions } from "@react-navigation/native";
 
 const InsertPostScreen: () => Node = ({navigation, route}) => {
   const [title, setTitle] = useState('');
@@ -34,7 +35,7 @@ const InsertPostScreen: () => Node = ({navigation, route}) => {
         content,
       })
       .then(res => {
-        navigation.navigate('Home');
+        navigation.dispatch(CommonActions.navigate('Home'));
       });
   };
   const BackIcon = props => <Icon {...props} name="arrow-back" />;
@@ -50,7 +51,7 @@ const InsertPostScreen: () => Node = ({navigation, route}) => {
   );
 
   const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+    <TopNavigationAction icon={BackIcon} onPress={() => navigation.dispatch(CommonActions.navigate('Home'))} />
   );
 
   return (

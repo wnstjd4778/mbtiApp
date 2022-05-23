@@ -27,6 +27,7 @@ import Slider from '@react-native-community/slider';
 import axios from 'axios';
 import {MBTI} from '../Constants/mbti';
 import {LOCATION} from '../Constants/testProblems';
+import { CommonActions } from "@react-navigation/native";
 
 const InsertPostScreen: () => Node = ({navigation, route}) => {
   const [title, setTitle] = useState('');
@@ -48,7 +49,7 @@ const InsertPostScreen: () => Node = ({navigation, route}) => {
       })
       .then(res => {
         alert('스터디 그룹이 생성되었습니다.');
-        navigation.navigate('Home');
+        navigation.dispatch(CommonActions.navigate('Home'))
       });
   };
 
@@ -67,7 +68,7 @@ const InsertPostScreen: () => Node = ({navigation, route}) => {
   );
 
   const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+    <TopNavigationAction icon={BackIcon} onPress={() =>  navigation.dispatch(CommonActions.navigate('POST'))} />
   );
 
   const renderOption = title => <SelectItem key={title} title={title} />;

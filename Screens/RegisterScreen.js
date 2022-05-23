@@ -27,8 +27,6 @@ const LogoScreen: () => Node = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userPasswordchk, setUserPasswordchk] = useState('');
-  const [errortext, setErrortext] = useState('');
-  const [errortext2, setErrortext2] = useState('');
   const idInputRef = createRef();
   const gradeInputRef = createRef();
   const passwordInputRef = createRef();
@@ -73,9 +71,6 @@ const LogoScreen: () => Node = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.topArea}>
         <View style={styles.titleArea} />
-        <View style={styles.TextArea}>
-          <Text style={styles.Text}>회원가입</Text>
-        </View>
       </View>
 
       <View style={styles.formArea}>
@@ -132,12 +127,6 @@ const LogoScreen: () => Node = ({navigation}) => {
           <Text style={styles.TextValidation}>
             비밀번호가 일치하지 않습니다.
           </Text>
-        ) : null}
-      </View>
-
-      <View style={{flex: 0.7, justifyContent: 'center'}}>
-        {errortext !== '' ? (
-          <Text style={styles.TextValidation}>{errortext}</Text>
         ) : null}
       </View>
 

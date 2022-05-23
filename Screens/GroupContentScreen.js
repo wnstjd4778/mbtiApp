@@ -14,6 +14,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Icon, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
+import { CommonActions } from "@react-navigation/native";
 
 const MbtiResultScreen: () => Node = ({navigation, route}) => {
   const group = route.params.group;
@@ -24,7 +25,7 @@ const MbtiResultScreen: () => Node = ({navigation, route}) => {
   );
 
   const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
+    <TopNavigationAction icon={BackIcon} onPress={() =>  navigation.dispatch(CommonActions.navigate('Group'))} />
   );
 
   return (

@@ -30,10 +30,12 @@ import {
   Popover,
 } from '@ui-kitten/components';
 import axios from 'axios';
+import { CommonActions } from "@react-navigation/native";
 
 const ChatRoomScreen: () => Node = ({navigation}) => {
   const [chatRooms, setChatRooms] = useState([]);
   const [location, setLocation] = useState('전체');
+  const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     axios.get('http://10.0.2.2:3000/study?location=' + location).then(res => {
@@ -41,7 +43,16 @@ const ChatRoomScreen: () => Node = ({navigation}) => {
         setChatRooms(res.data.data);
       }
     });
+    getMe();
   }, [location]);
+
+  const getMe = async () => {
+    await axios.get('http://10.0.2.2:3000/user/me').then(res => {
+      if (res.data.status == 200) {
+        setProfile(res.data.data);
+      }
+    });
+  };
 
   const renderItem = ({item}) => {
     return (
@@ -83,11 +94,12 @@ const ChatRoomScreen: () => Node = ({navigation}) => {
                   await axios
                     .post('http://10.0.2.2:3000/study/' + item._id + '/enroll')
                     .then(res => {
-                      alert('성공');
+                      alert('신청에 성공하였습니다.');
+                      navigation.dispatch(CommonActions.navigate('Group'));
                       setLocation('전체');
                     })
                     .catch(err => {
-                      alert('실패');
+                      alert('해당 MBTI는 접근할 수 없습니다.');
                     });
                 }}
                 style={{
@@ -107,16 +119,14 @@ const ChatRoomScreen: () => Node = ({navigation}) => {
               borderTopColor: '#BDBDBD',
               flex: 1,
             }}>
+            <View style={{flex: 1}}>
+              <Text style={styles.listBottomText}>
+                {item.mbti.includes(profile.mbti) ? '신청 가능' : '신청 불가'}
+              </Text>
+            </View>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() =>
-                navigation.navigate('GroupContent', {group: item})
-              }>
-              <Text style={styles.listBottomText}> 소개 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{flex: 1}}
-              onPress={() => navigation.navigate('GroupMbti', {group: item})}>
+              onPress={() => navigation.dispatch(CommonActions.navigate('GroupMbti', {group: item}))}>
               <Text style={styles.listBottomText}> mbti </Text>
             </TouchableOpacity>
           </View>
